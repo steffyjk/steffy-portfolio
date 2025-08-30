@@ -7,6 +7,7 @@ export default function Navbar() {
         <span className="font-bold">Steffy Khristi</span>
         <div className="flex gap-4 text-sm">
           <Link href="/">Home</Link>
+          <Link href="/skills">Skills</Link>
           <Link href="/projects">Projects</Link>
           <Link href="/experience">Experience</Link>
           <Link href="/contact">Contact</Link>
