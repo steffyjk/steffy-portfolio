@@ -1,18 +1,8 @@
-"use client"; 
+"use client";
 import { motion } from "framer-motion";
 
 export default function Experience() {
   const experiences = [
-    {
-      role: "Software Engineer",
-      company: "QuantumBot Private Limited",
-      period: "Jan 2025 – Present",
-      details: [
-        "Specializing in Python backend development with Django.",
-        "Building scalable web applications & REST APIs.",
-        "Collaborating with frontend teams for feature delivery.",
-      ],
-    },
     {
       role: "Software Engineer",
       company: "Tracewave Transparency Pvt. Ltd.",
@@ -21,6 +11,16 @@ export default function Experience() {
         "Led vendor management web application development.",
         "Designed system architecture & managed Scrum meetings.",
         "Integrated Angular + Django + RxJS with PostgreSQL & Azure.",
+      ],
+    },
+    {
+      role: "Software Engineer",
+      company: "Mars Intelligence Private Limited",
+      period: "Jan 2025 – Present",
+      details: [
+        "Specializing in Python backend development with Django.",
+        "Building scalable web applications & REST APIs.",
+        "Collaborating with frontend teams for feature delivery.",
       ],
     },
     {
