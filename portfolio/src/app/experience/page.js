@@ -1,3 +1,6 @@
+"use client"; 
+import { motion } from "framer-motion";
+
 export default function Experience() {
   const experiences = [
     {
@@ -50,7 +53,13 @@ export default function Experience() {
             {/* Timeline Dot */}
             <div className="absolute -left-[1.6rem] top-1 w-3 h-3 bg-black rounded-full"></div>
 
-            <div className="bg-white shadow-md rounded-xl p-5 hover:shadow-lg transition">
+            {/* Animated Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.2 }}
+              className="bg-white shadow-md rounded-xl p-5 hover:shadow-lg transition"
+            >
               <h3 className="font-semibold text-xl">{exp.role}</h3>
               <p className="text-sm text-gray-500">
                 {exp.company} • {exp.period}
@@ -60,7 +69,7 @@ export default function Experience() {
                   <li key={j}>{d}</li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>
