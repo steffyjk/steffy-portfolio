@@ -47,10 +47,7 @@ export default function Home() {
                  text-white overflow-hidden px-6"
     >
       <h1 className="hero-title text-5xl md:text-6xl font-extrabold text-center">
-        Hi, I’m{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          Steffy Khristi
-        </span>
+        Hi, I’m <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Steffy Khristi</span>
       </h1>
 
       <p className="hero-subtitle mt-6 text-lg md:text-xl text-gray-300 text-center max-w-2xl">
@@ -61,7 +58,7 @@ export default function Home() {
         . I build scalable apps with clean code & modern UI.
       </p>
 
-      <div className="mt-8 flex gap-4">
+      {/* <div className="mt-8 flex gap-4">
         <a
           href="/Steffy_Resume.pdf"
           className="hero-btn px-6 py-3 rounded-xl shadow 
@@ -80,7 +77,7 @@ export default function Home() {
         >
           Contact Me
         </a>
-      </div>
+      </div> */}
 
       <div className="hero-img mt-12">
         <Image

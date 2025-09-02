@@ -2,6 +2,15 @@
 import { motion } from "framer-motion";
 
 const skills = {
+  backend: [
+    "Python",
+    "Django",
+    "Flask",
+    "DRF",
+    "Node.js",
+    "WebSockets",
+    "RabbitMQ",
+  ],
   frontend: [
     "React",
     "Next.js",
@@ -13,15 +22,6 @@ const skills = {
     "CSS",
     "Tailwind",
   ],
-  backend: [
-    "Python",
-    "Django",
-    "Flask",
-    "DRF",
-    "Node.js",
-    "WebSockets",
-    "RabbitMQ",
-  ],
   database: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "SQLite"],
   cloud: ["AWS", "Azure", "EC2", "S3"],
   tools: ["Git", "GitHub", "Docker", "Figma", "VS Code", "PyCharm"],
@@ -29,8 +29,8 @@ const skills = {
 
 export default function Skills() {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8">
-      <h2 className="text-3xl font-bold text-center text-white mb-12">
+    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8 mt-12">
+      <h2 className="text-3xl font-bold text-left text-white mb-3 ml-2">
         💡 Skills
       </h2>
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">

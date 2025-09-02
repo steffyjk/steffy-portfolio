@@ -14,11 +14,12 @@ export default function Experience() {
       ],
     },
     {
-      role: "Software Engineer [ Team Lead ]",
+      role: "Software Engineer",
       company: "Mars Intelligence Private Limited",
       period: "Oct 2023 – Dec 2024",
       details: [
         "Led vendor management web application development.",
+        "Led team of 20 people & managed daily scrum meetings.",
         "Designed system architecture & managed Scrum meetings.",
         "Integrated Angular + Django + RxJS with PostgreSQL & Azure.",
       ],
@@ -45,8 +46,8 @@ export default function Experience() {
   ];
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8">
-      <h2 className="text-3xl font-bold text-center text-white mb-12">
+    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8 mt-12">
+      <h2 className="text-3xl font-bold text-left text-white mb-3 ml-2">
         🏆 Experience
       </h2>
       <div className="relative border-l border-gray-700 ml-6 space-y-10">

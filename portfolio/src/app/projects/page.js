@@ -70,8 +70,8 @@ export default function Projects() {
   ];
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8">
-      <h2 className="text-3xl font-bold text-center text-white mb-10">
+    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8 mt-12">
+      <h2 className="text-3xl font-bold text-left text-white mb-3 ml-2">
         🚀 My Projects
       </h2>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
