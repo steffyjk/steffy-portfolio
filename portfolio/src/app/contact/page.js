@@ -9,7 +9,7 @@ export default function Contact() {
     <main className="min-h-screen bg-black text-white py-16 px-4">
       {/* Header Section */}
       <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-4xl font-extrabold">Let’s Connect</h2>
+        <h2 className="text-4xl mt-4 font-extrabold">Let’s Connect</h2>
         <p className="mt-4 text-lg text-gray-300">
           Whether it’s web development, automation, or your next big idea — I’d
           love to collaborate.
