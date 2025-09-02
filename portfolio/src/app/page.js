@@ -42,15 +42,20 @@ export default function Home() {
   return (
     <main
       ref={heroRef}
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-200 text-gray-900 overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center 
+                 bg-gradient-to-br from-black via-gray-900 to-black 
+                 text-white overflow-hidden px-6"
     >
       <h1 className="hero-title text-5xl md:text-6xl font-extrabold text-center">
-        Hi, I’m <span className="text-blue-600">Steffy Khristi</span>
+        Hi, I’m{" "}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+          Steffy Khristi
+        </span>
       </h1>
 
-      <p className="hero-subtitle mt-6 text-lg md:text-xl text-gray-600 text-center max-w-2xl">
+      <p className="hero-subtitle mt-6 text-lg md:text-xl text-gray-300 text-center max-w-2xl">
         Software Engineer specializing in{" "}
-        <span className="font-semibold">
+        <span className="font-semibold text-white">
           Python, Django, React & Full-Stack Development
         </span>
         . I build scalable apps with clean code & modern UI.
@@ -59,25 +64,34 @@ export default function Home() {
       <div className="mt-8 flex gap-4">
         <a
           href="/Steffy_Resume.pdf"
-          className="hero-btn px-5 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+          className="hero-btn px-6 py-3 rounded-xl shadow 
+                     bg-gradient-to-r from-blue-500 to-purple-600 
+                     text-white font-medium 
+                     hover:scale-105 transition transform backdrop-blur-md"
         >
           Download Resume
         </a>
         <a
           href="/contact"
-          className="hero-btn px-5 py-3 border border-gray-700 rounded-lg shadow hover:bg-gray-100 transition"
+          className="hero-btn px-6 py-3 rounded-xl shadow 
+                     border border-gray-600 bg-white/10 backdrop-blur-md 
+                     text-gray-200 hover:bg-white/20 hover:text-white 
+                     transition"
         >
           Contact Me
         </a>
       </div>
 
-      <div className="hero-img mt-8">
+      <div className="hero-img mt-12">
         <Image
           src={profilePic}
           width={400}
           height={400}
           alt="Steffy Khristi"
-          className="w-80 h-80 rounded-full border-4 border-blue-600 shadow-lg object-cover"
+          className="w-72 h-72 md:w-80 md:h-80 rounded-full 
+                     border-4 border-blue-500/60 
+                     shadow-[0_0_25px_rgba(59,130,246,0.7)] 
+                     object-cover"
         />
       </div>
     </main>

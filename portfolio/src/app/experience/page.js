@@ -23,7 +23,6 @@ export default function Experience() {
         "Integrated Angular + Django + RxJS with PostgreSQL & Azure.",
       ],
     },
-
     {
       role: "Associate Software Engineer",
       company: "Inexture Solutions LLP",
@@ -46,32 +45,35 @@ export default function Experience() {
   ];
 
   return (
-    <section className="relative border-l border-gray-300 ml-4 pl-6">
-      <h2 className="text-3xl font-bold mb-10">Experience</h2>
-      <div className="space-y-10">
+    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8">
+      <h2 className="text-3xl font-bold text-center text-white mb-12">
+        🏆 Experience
+      </h2>
+      <div className="relative border-l border-gray-700 ml-6 space-y-10">
         {experiences.map((exp, i) => (
-          <div key={i} className="relative">
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.3 }}
+            className="relative pl-6"
+          >
             {/* Timeline Dot */}
-            <div className="absolute -left-[1.6rem] top-1 w-3 h-3 bg-black rounded-full"></div>
+            <div className="absolute -left-[1.45rem] top-2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 shadow-lg"></div>
 
-            {/* Animated Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
-              className="bg-white shadow-md rounded-xl p-5 hover:shadow-lg transition"
-            >
-              <h3 className="font-semibold text-xl">{exp.role}</h3>
-              <p className="text-sm text-gray-500">
+            {/* Experience Card */}
+            <div className="border border-gray-700 rounded-2xl p-6 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-xl transition-transform hover:-translate-y-2">
+              <h3 className="font-semibold text-xl text-white">{exp.role}</h3>
+              <p className="text-sm text-gray-400 mb-3">
                 {exp.company} • {exp.period}
               </p>
-              <ul className="mt-3 list-disc list-inside text-gray-700 text-sm space-y-1">
+              <ul className="list-disc list-inside text-gray-300 text-sm space-y-2">
                 {exp.details.map((d, j) => (
                   <li key={j}>{d}</li>
                 ))}
               </ul>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>
