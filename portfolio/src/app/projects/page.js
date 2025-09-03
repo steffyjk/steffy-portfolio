@@ -1,17 +1,14 @@
+"use client";
+import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+
 export default function Projects() {
   const projects = [
     {
       title: "Unibox – Unified Chat Platform",
       description:
         "Unified chat platform integrating WhatsApp, Telegram, and internal messaging into one interface with real-time communication and multi-platform sync.",
-      tech: [
-        "Django",
-        "React",
-        "PostgreSQL",
-        "WebSockets",
-        "Django Channels",
-        "Telethon",
-      ],
+      tech: ["Django", "React", "PostgreSQL", "WebSockets", "Django Channels", "Telethon"],
     },
     {
       title: "VENUS Tender Management System",
@@ -69,30 +66,116 @@ export default function Projects() {
     },
   ];
 
+  const canvasRef = useRef(null);
+
+  // ✨ Particle background
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5) * 0.7,
+        dy: (Math.random() - 0.5) * 0.7,
+        r: Math.random() * 2 + 1,
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, i) => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(139,92,246,0.8)";
+        ctx.fill();
+
+        for (let j = i; j < particles.length; j++) {
+          const dx = p.x - particles[j].x;
+          const dy = p.y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.strokeStyle = "rgba(59,130,246,0.15)";
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+    return () => window.removeEventListener("resize", resize);
+  }, []);
+
   return (
-    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8 mt-12">
-      <h2 className="text-3xl font-bold text-left text-white mb-3 ml-2">
+    <section className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-6 sm:p-10 md:p-14 lg:p-20 overflow-hidden">
+      {/* Particle Galaxy Background */}
+      <canvas ref={canvasRef} className="absolute inset-0 z-0"></canvas>
+
+      {/* Section Title */}
+      <motion.h2
+        initial={{ opacity: 0, y: -40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-12 sm:mb-16 z-10"
+      >
         🚀 My Projects
-      </h2>
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      </motion.h2>
+
+      {/* Projects Grid */}
+      <div className="grid gap-8 sm:gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-3 relative z-10 max-w-7xl mx-auto">
         {projects.map((p, i) => (
-          <article
+          <motion.article
             key={i}
-            className="relative border border-gray-700 rounded-2xl p-6 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-xl transition-transform hover:-translate-y-2"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0px 0px 25px rgba(139,92,246,0.6), 0px 0px 45px rgba(59,130,246,0.5)",
+            }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+            className="rounded-2xl p-6 sm:p-7 md:p-8 backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-blue-500/30 shadow-[0_0_20px_rgba(139,92,246,0.25)] hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
           >
-            <h3 className="font-semibold text-xl text-white">{p.title}</h3>
-            <p className="mt-3 text-sm text-gray-300">{p.description}</p>
+            <h3 className="font-semibold text-lg sm:text-xl md:text-2xl text-white">{p.title}</h3>
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-300 leading-relaxed flex-grow">
+              {p.description}
+            </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {p.tech.map((t) => (
-                <span
+                <motion.span
                   key={t}
-                  className="px-3 py-1 text-xs font-medium border border-gray-500 rounded-full text-gray-200 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition"
+                  whileHover={{
+                    scale: 1.15,
+                    boxShadow: "0px 0px 15px rgba(59,130,246,0.8)",
+                  }}
+                  className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-full text-gray-200 bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-400/40 backdrop-blur-md transition"
                 >
                   {t}
-                </span>
+                </motion.span>
               ))}
             </div>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>

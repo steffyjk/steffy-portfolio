@@ -46,29 +46,45 @@ export default function Experience() {
   ];
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-8 mt-12">
-      <h2 className="text-3xl font-bold text-left text-white mb-3 ml-2">
+    <section className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-6 sm:p-10 md:p-14 lg:p-20">
+      {/* Glow background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-1/3 w-[400px] h-[400px] bg-purple-500/20 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-20 right-1/4 w-[350px] h-[350px] bg-blue-500/20 blur-[100px] rounded-full"></div>
+      </div>
+
+      {/* Title */}
+      <motion.h2
+        initial={{ opacity: 0, y: -40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-12 sm:mb-16 relative z-10"
+      >
         🏆 Experience
-      </h2>
-      <div className="relative border-l border-gray-700 ml-6 space-y-10">
+      </motion.h2>
+
+      {/* Timeline */}
+      <div className="relative border-l-2 border-blue-500/40 ml-6 space-y-12 sm:space-y-14 md:space-y-16 max-w-4xl mx-auto z-10">
         {experiences.map((exp, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.3 }}
-            className="relative pl-6"
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.2 }}
+            className="relative pl-8"
           >
-            {/* Timeline Dot */}
-            <div className="absolute -left-[1.45rem] top-2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 shadow-lg"></div>
+            {/* Glowing Timeline Dot */}
+            <div className="absolute -left-[1.6rem] top-3 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 shadow-[0_0_15px_rgba(139,92,246,0.9)] animate-pulse"></div>
 
             {/* Experience Card */}
-            <div className="border border-gray-700 rounded-2xl p-6 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-xl transition-transform hover:-translate-y-2">
-              <h3 className="font-semibold text-xl text-white">{exp.role}</h3>
-              <p className="text-sm text-gray-400 mb-3">
+            <div className="rounded-2xl p-6 sm:p-7 md:p-8 backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-blue-500/30 shadow-[0_0_15px_rgba(139,92,246,0.25)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-2">
+              <h3 className="font-semibold text-lg sm:text-xl md:text-2xl text-white">
+                {exp.role}
+              </h3>
+              <p className="text-sm sm:text-base text-gray-400 mb-4">
                 {exp.company} • {exp.period}
               </p>
-              <ul className="list-disc list-inside text-gray-300 text-sm space-y-2">
+              <ul className="list-disc list-inside text-gray-300 text-sm sm:text-base space-y-2">
                 {exp.details.map((d, j) => (
                   <li key={j}>{d}</li>
                 ))}
