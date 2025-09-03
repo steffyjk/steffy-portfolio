@@ -19,9 +19,9 @@ export default function Home() {
       })
         .from(".hero-subtitle", { y: 30, opacity: 0, duration: 0.8 }, "-=0.6")
         .from(
-          ".hero-btn",
-          { opacity: 0, scale: 0.8, stagger: 0.2, duration: 0.6 },
-          "-=0.4"
+          ".hero-desc",
+          { y: 40, opacity: 0, duration: 0.9, ease: "power3.out" },
+          "-=0.5"
         )
         .from(
           ".hero-img",
@@ -47,37 +47,27 @@ export default function Home() {
                  text-white overflow-hidden px-6"
     >
       <h1 className="hero-title text-5xl md:text-6xl font-extrabold text-center">
-        Hi, I’m <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Steffy Khristi</span>
+        Hi, I’m{" "}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+          Steffy Khristi
+        </span>
       </h1>
 
       <p className="hero-subtitle mt-6 text-lg md:text-xl text-gray-300 text-center max-w-2xl">
-        Software Engineer specializing in{" "}
+        Backend Software Engineer specializing in{" "}
         <span className="font-semibold text-white">
-          Python, Django, React & Full-Stack Development
+          Python, Django, AngularTs, NextJs, Scalable APIs & Generative AI
         </span>
-        . I build scalable apps with clean code & modern UI.
+        .
       </p>
 
-      {/* <div className="mt-8 flex gap-4">
-        <a
-          href="/Steffy_Resume.pdf"
-          className="hero-btn px-6 py-3 rounded-xl shadow 
-                     bg-gradient-to-r from-blue-500 to-purple-600 
-                     text-white font-medium 
-                     hover:scale-105 transition transform backdrop-blur-md"
-        >
-          Download Resume
-        </a>
-        <a
-          href="/contact"
-          className="hero-btn px-6 py-3 rounded-xl shadow 
-                     border border-gray-600 bg-white/10 backdrop-blur-md 
-                     text-gray-200 hover:bg-white/20 hover:text-white 
-                     transition"
-        >
-          Contact Me
-        </a>
-      </div> */}
+      <p className="hero-desc mt-4 text-base md:text-lg text-gray-400 text-center max-w-3xl leading-relaxed">
+        I design and build{" "}
+        <span className="text-white font-medium">robust backend systems, RESTful APIs, and AI-driven applications</span>. 
+        With expertise in{" "}
+        <span className="text-white font-medium">cloud deployment (AWS, Azure), real-time systems, and Generative AI integration</span>, 
+        I help transform complex ideas into reliable, intelligent, and scalable digital solutions.
+      </p>
 
       <div className="hero-img mt-12">
         <Image
