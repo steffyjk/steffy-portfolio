@@ -24,6 +24,12 @@ export default function Navbar() {
           <Link href="/contact" className="hover:text-gray-300 transition">
             Contact
           </Link>
+           <Link href="/terms" className="hover:text-gray-300 transition">
+            Terms of Service
+          </Link>
+           <Link href="/refund" className="hover:text-gray-300 transition">
+            Refund Policy
+          </Link>
         </div>
       </nav>
     </header>
