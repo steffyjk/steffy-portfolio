@@ -1,0 +1,99 @@
+.about-section {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-grid {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 60px
+    );
+  opacity: 0.05;
+  z-index: 0;
+}
+
+.about-glow {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(98, 244, 170, 0.1), transparent 70%);
+  filter: blur(120px);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.about-card {
+  position: relative;
+  background: color-mix(in oklab, var(--bg-2) 90%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.about-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 35px rgba(98, 244, 170, 0.25);
+}
+
+.about-card-header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+  opacity: 0.9;
+}
+
+.about-card-value {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Make cards responsive and clean */
+@media (max-width: 640px) {
+  .about-card {
+    padding: 1.25rem;
+  }
+}
+
+/* Subtle scanline for theme cohesion */
+.about-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(98, 244, 170, 0.05),
+    transparent
+  );
+  animation: aboutScan 6s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes aboutScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}

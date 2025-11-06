@@ -1,0 +1,118 @@
+.skill-section {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-grid {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 70px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 70px
+    );
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skill-header {
+  position: relative;
+  z-index: 2;
+}
+
+.skill-data {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Category Block */
+.skill-block {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--bg-2) 90%, transparent);
+  padding: 1.75rem 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease;
+}
+.skill-block:hover {
+  border-color: var(--accent);
+}
+
+/* Category Label */
+.skill-category {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+/* Skills */
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+}
+
+.skill-item {
+  background: color-mix(in oklab, var(--card), transparent 20%);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+  color: var(--text);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.skill-item:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Scan Animation */
+.skill-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(98, 244, 170, 0.05),
+    transparent
+  );
+  animation: skillScan 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes skillScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .skill-block {
+    padding: 1.25rem 1.5rem;
+  }
+  .skill-item {
+    font-size: 0.7rem;
+  }
+}

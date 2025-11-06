@@ -1,101 +1,116 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "@/assets/css/AboutSection.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutSection() {
   const ref = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".about-title", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-      gsap.from(".about-line", {
-        width: 0,
-        opacity: 0,
-        duration: 1,
-        delay: 0.3,
-        ease: "power3.out",
-      });
-      gsap.from(".about-desc", {
-        y: 30,
-        opacity: 0,
-        duration: 1,
-        delay: 0.4,
-        ease: "power3.out",
-      });
-      gsap.from(".about-grid", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        delay: 0.5,
-        ease: "power3.out",
-      });
-    }, ref);
-    return () => ctx.revert();
+  useLayoutEffect(() => {
+    let ctx;
+    requestAnimationFrame(() => {
+      ctx = gsap.context(() => {
+        gsap.set(
+          [".about-header", ".about-query", ".about-desc", ".about-card"],
+          {
+            autoAlpha: 0,
+            y: 40,
+          }
+        );
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out", duration: 0.9 },
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top 85%",
+            once: true,
+          },
+        });
+
+        tl.to(".about-header", { y: 0, autoAlpha: 1 })
+          .to(".about-query", { y: 0, autoAlpha: 1 }, "-=0.4")
+          .to(".about-desc", { y: 0, autoAlpha: 1 }, "-=0.3")
+          .to(".about-card", {
+            y: 0,
+            autoAlpha: 1,
+            stagger: 0.15,
+            ease: "power4.out",
+          });
+      }, ref);
+      ScrollTrigger.refresh();
+    });
+    return () => ctx?.revert();
   }, []);
 
   return (
     <section
       id="about"
       ref={ref}
-      className="min-h-screen flex flex-col justify-center items-center px-6 pb-24 bg-[var(--bg)] text-[var(--text)] relative overflow-hidden"
+      className="about-section relative min-h-screen flex flex-col justify-center items-center px-6 pb-24 text-[var(--text)] overflow-hidden"
     >
-      {/* Section Heading */}
-      <div className="text-center mb-10">
-        <h2 className="about-title text-3xl sm:text-4xl font-bold tracking-tight uppercase">
-          About <span className="text-[var(--accent)]">Me</span>
+      {/* Glow & grid background */}
+      <div className="about-glow" aria-hidden />
+      <div className="about-grid" aria-hidden />
+
+      {/* Header */}
+      <div className="text-center mb-10 relative z-10 about-header">
+        <h2 className="title mono text-[var(--accent)] mb-2">
+          /profile/about_me
         </h2>
-        <div className="about-line h-[2px] w-32 mx-auto mt-3 bg-[var(--accent)] rounded-full"></div>
+        <p className="subtle text-sm">data.lastUpdated = NOW()</p>
       </div>
 
-      {/* Main Description */}
-      <div className="about-desc max-w-3xl text-center text-gray-300 leading-relaxed text-sm sm:text-base md:text-lg">
+      {/* Query-style text */}
+      <div className="about-query mono text-[0.85rem] text-[var(--accent-2)]/80 mb-4 z-10">
+        <span className="text-[var(--accent)]">SELECT</span> mindset,
+        principles, purpose <span className="text-[var(--accent)]">FROM</span>{" "}
+        steffy_khristi <span className="text-[var(--accent)]">WHERE</span> type
+        = 'engineer';
+      </div>
+
+      {/* Description */}
+      <div className="about-desc max-w-3xl text-center leading-relaxed text-sm sm:text-base md:text-lg subtle relative z-10">
         I’m{" "}
         <span className="text-[var(--accent)] font-semibold">
           Steffy Khristi
         </span>
-        , a software engineer who thrives on structure, clarity, and impact. I
-        see logic as art — building precise systems that balance technology and
-        emotion. My curiosity drives my exploration of emerging tools, and my
-        discipline turns complexity into clean, scalable results. I believe
-        great code mirrors the mind: clear, deliberate, and deeply human.
+        , a software engineer who thrives on structure, clarity, and purpose. I
+        see logic as art — every system I build balances precision and emotion.
+        My curiosity fuels innovation, while discipline shapes it into
+        practical, elegant solutions.
       </div>
 
-      {/* Info Grid */}
-      <div className="about-grid mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl text-center">
-        <div className="p-6 border border-white/10 rounded-lg bg-white/[0.02] hover:border-[var(--accent)]/60 transition-all">
-          <h3 className="text-[var(--accent)] text-sm uppercase tracking-widest mb-3">
-            Mindset
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Curiosity first. Logic follows. I question everything until it makes
-            sense — then I build.
-          </p>
-        </div>
-
-        <div className="p-6 border border-white/10 rounded-lg bg-white/[0.02] hover:border-[var(--accent)]/60 transition-all">
-          <h3 className="text-[var(--accent)] text-sm uppercase tracking-widest mb-3">
-            Principles
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Loyalty and precision define my work. I don’t chase speed — I chase
-            quality and truth.
-          </p>
-        </div>
-
-        <div className="p-6 border border-white/10 rounded-lg bg-white/[0.02] hover:border-[var(--accent)]/60 transition-all">
-          <h3 className="text-[var(--accent)] text-sm uppercase tracking-widest mb-3">
-            Purpose
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            To merge logic, emotion, and creativity into systems that make
-            people’s lives better.
-          </p>
-        </div>
+      {/* Cards as database entries */}
+      <div className="about-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-16 max-w-6xl w-full z-10">
+        {[
+          {
+            key: "mindset",
+            value:
+              "Curiosity first. Logic follows. I question everything until it makes sense — then I build.",
+          },
+          {
+            key: "principles",
+            value:
+              "Loyalty and precision define my work. I don’t chase speed — I chase quality and truth.",
+          },
+          {
+            key: "purpose",
+            value:
+              "To merge logic, emotion, and creativity into systems that make people’s lives better.",
+          },
+        ].map((entry, i) => (
+          <div key={i} className="about-card card-hover">
+            <div className="about-card-header mono text-[var(--accent)]">
+              field: <span className="text-[var(--accent-2)]">{entry.key}</span>
+            </div>
+            <p className="about-card-value text-sm sm:text-base">
+              {entry.value}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

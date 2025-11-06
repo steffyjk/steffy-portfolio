@@ -1,6 +1,10 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "@/assets/css/SkillSection.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const skills = {
   Backend: [
@@ -31,78 +35,67 @@ const skills = {
 export default function SkillSection() {
   const ref = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // ✨ Animate header first
-      gsap.from(".skills-title", {
-        y: 30,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power3.out",
-      });
-      gsap.from(".skills-line", {
-        width: 0,
-        opacity: 0,
-        duration: 0.9,
-        delay: 0.1,
-        ease: "power3.out",
-      });
-      gsap.from(".skills-desc", {
-        y: 20,
-        opacity: 0,
-        duration: 0.9,
-        delay: 0.2,
-        ease: "power3.out",
-      });
+  useLayoutEffect(() => {
+    let ctx;
+    requestAnimationFrame(() => {
+      ctx = gsap.context(() => {
+        gsap.set([".skill-header", ".skill-block", ".skill-item"], {
+          autoAlpha: 0,
+          y: 40,
+        });
 
-      // 🔹 Animate cards after header
-      gsap.to(".skill-card", {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        delay: 0.4,
-        stagger: 0.1,
-        ease: "power3.out",
-      });
-    }, ref);
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out", duration: 0.8 },
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top 85%",
+            once: true,
+          },
+        });
 
-    return () => ctx.revert();
+        tl.to(".skill-header", { y: 0, autoAlpha: 1 })
+          .to(".skill-block", { y: 0, autoAlpha: 1, stagger: 0.15 }, "-=0.2")
+          .to(".skill-item", { y: 0, autoAlpha: 1, stagger: 0.02 }, "-=0.4");
+      }, ref);
+      ScrollTrigger.refresh();
+    });
+
+    return () => ctx?.revert();
   }, []);
 
   return (
     <section
-      id="skills"
+      id="skill"
       ref={ref}
-      className="min-h-screen flex flex-col justify-center items-center px-6 pb-24 bg-[var(--bg)] text-[var(--text)] relative overflow-hidden"
+      className="skill-section relative min-h-screen flex flex-col justify-center items-center px-6 py-24 text-[var(--text)] overflow-hidden"
     >
+      {/* Subtle grid background */}
+      <div className="skill-grid" aria-hidden />
+
       {/* Header */}
-      <div className="text-center mb-12">
-        <h2 className="skills-title text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight">
-          Technical <span className="text-[var(--accent)]">Expertise</span>
+      <div className="skill-header text-center mb-10 z-10">
+        <h2 className="title mono text-[var(--accent)] mb-2">
+          /dataset/technical_expertise
         </h2>
-        <div className="skills-line h-[2px] w-28 mx-auto mt-4 bg-[var(--accent)] rounded-full"></div>
-        <p className="skills-desc text-gray-400 text-sm sm:text-base mt-4 max-w-2xl mx-auto">
-          A structured ecosystem of tools, languages, and frameworks I use to
-          turn logic into reliable systems.
+        <p className="subtle text-sm">
+          status: <span className="text-[var(--accent)]">connected</span> •
+          query:{" "}
+          <span className="text-[var(--accent-2)]">
+            SELECT * FROM skillset;
+          </span>
         </p>
       </div>
 
-      {/* Skills Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full text-center z-10">
-        {Object.entries(skills).map(([category, items], i) => (
-          <div
-            key={i}
-            className="skill-card opacity-0 translate-y-10 p-8 border border-white/10 bg-white/[0.02] backdrop-blur-sm rounded-xl hover:border-[var(--accent)]/50 transition-all duration-300"
-          >
-            <h3 className="text-[var(--accent)] text-lg font-semibold uppercase tracking-widest mb-4">
-              {category}
-            </h3>
-            <div className="flex flex-wrap justify-center gap-2 mt-3">
-              {items.map((skill, j) => (
-                <span
-                  key={j}
-                  className="px-3 py-1.5 text-xs font-medium text-gray-200 border border-[var(--accent)]/30 rounded-full bg-[var(--accent)]/5 hover:bg-[var(--accent)]/10 hover:text-[var(--accent)] transition-all duration-300"
-                >
+      {/* Skill data table */}
+      <div className="skill-data max-w-5xl w-full z-10">
+        {Object.entries(skills).map(([category, items]) => (
+          <div key={category} className="skill-block card-hover">
+            <div className="skill-category mono text-[var(--accent)]">
+              {category.toLowerCase()}:
+            </div>
+            <div className="skill-items">
+              {items.map((skill, i) => (
+                <span key={i} className="skill-item mono">
                   {skill}
                 </span>
               ))}
@@ -110,17 +103,6 @@ export default function SkillSection() {
           </div>
         ))}
       </div>
-
-      {/* Subtle background grid */}
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #00FFF6 1px, transparent 1px), linear-gradient(to bottom, #00FFF6 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      ></div>
     </section>
   );
 }

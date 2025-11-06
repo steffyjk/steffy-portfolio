@@ -1,0 +1,122 @@
+.projects-section {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-grid {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 70px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 70px
+    );
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Table Layout */
+.proj-table {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.proj-table-header {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1.5fr 3fr;
+  font-weight: 600;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.proj-row {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1.5fr 3fr;
+  gap: 0.75rem;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: color-mix(in oklab, var(--bg-2) 90%, transparent);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.proj-row:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 32px rgba(98, 244, 170, 0.2);
+}
+
+.proj-id {
+  font-weight: 500;
+}
+.proj-title {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.proj-tech {
+  font-size: 0.8rem;
+  color: var(--accent-2);
+}
+.proj-desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Scanline animation */
+.projects-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(98, 244, 170, 0.05),
+    transparent
+  );
+  animation: projScan 7s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes projScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .proj-table-header,
+  .proj-row {
+    grid-template-columns: 0.5fr 2fr;
+    grid-auto-rows: auto;
+  }
+  .proj-tech,
+  .proj-desc {
+    grid-column: 1 / -1;
+  }
+  .proj-tech {
+    margin-top: 0.5rem;
+  }
+}

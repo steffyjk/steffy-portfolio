@@ -1,0 +1,151 @@
+.work-section {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.work-grid {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 70px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 70px
+    );
+  opacity: 0.05;
+  z-index: 0;
+}
+
+/* Header */
+.work-header {
+  position: relative;
+  z-index: 2;
+}
+
+/* Log Console */
+.work-log {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  background: color-mix(in oklab, var(--bg-2) 85%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Each Entry */
+.log-entry {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+.log-entry:hover {
+  border-color: var(--accent-2);
+}
+.log-entry::before {
+  content: "";
+  position: absolute;
+  left: -0.5rem;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* Meta line */
+.log-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+.log-time {
+  color: var(--muted);
+}
+.log-marker {
+  color: var(--accent);
+  opacity: 0.8;
+}
+.log-role {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.log-company {
+  opacity: 0.85;
+}
+
+/* Details */
+.log-details {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0.3rem 0 0 0;
+}
+.log-details li {
+  font-size: 0.8rem;
+  color: var(--text);
+  opacity: 0.85;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1rem;
+}
+.log-details li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+/* Scanline animation */
+.work-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(98, 244, 170, 0.05),
+    transparent
+  );
+  animation: workScan 9s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes workScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .work-log {
+    padding: 1.25rem;
+  }
+  .log-meta {
+    font-size: 0.75rem;
+  }
+  .log-details li {
+    font-size: 0.75rem;
+  }
+}
