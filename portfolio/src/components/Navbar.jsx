@@ -1,134 +1,62 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import { Link as ScrollLink } from "react-scroll";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const navItems = [
+    { name: "Home", to: "home" },
+    { name: "About", to: "about" },
+    { name: "skills", to: "skills" },
+    { name: "Projects", to: "projects" },
+    { name: "experience", to: "experience" },
+    { name: "Contact", to: "contact" },
+  ];
 
   return (
-    <header className="w-full fixed top-0 left-0 z-50 backdrop-blur-lg bg-black/85 border-b border-white/20">
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 h-16 text-white">
-        {/* Logo / Name */}
-        <span className="font-bold text-lg tracking-wide">Steffy Khristi</span>
-
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex gap-6 text-sm font-semibold">
-          <Link href="/" className="text-white hover:text-gray-300 transition">
-            Home
-          </Link>
-          <Link href="/skills" className="text-white hover:text-gray-300 transition">
-            Skills
-          </Link>
-          <Link href="/projects" className="text-white hover:text-gray-300 transition">
-            Projects
-          </Link>
-          <Link href="/experience" className="text-white hover:text-gray-300 transition">
-            Experience
-          </Link>
-          <Link href="/contact" className="text-white hover:text-gray-300 transition">
-            Contact
-          </Link>
-          <Link href="/terms" className="text-white hover:text-gray-300 transition">
-            Terms of Service
-          </Link>
-          <Link href="/refund" className="text-white hover:text-gray-300 transition">
-            Refund Policy
-          </Link>
+    <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 backdrop-blur-md bg-black/40">
+      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        <h1 className="text-lg tracking-[0.15em] font-bold text-[var(--accent)]">
+          STEFFY / KRISTI
+        </h1>
+        <div className="hidden md:flex gap-10 text-sm uppercase font-semibold">
+          {navItems.map((item) => (
+            <ScrollLink
+              key={item.to}
+              to={item.to}
+              smooth
+              duration={600}
+              offset={-70}
+              className="cursor-pointer text-gray-300 hover:text-[var(--accent)] transition-all tracking-wide"
+            >
+              {item.name}
+            </ScrollLink>
+          ))}
         </div>
 
-        {/* Mobile Hamburger */}
         <button
-          className="md:hidden flex items-center text-white"
-          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-[var(--accent)]"
+          onClick={() => setOpen(!open)}
         >
-          {isOpen ? (
-            // Close (X) icon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            // Hamburger (Menu) icon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
+          ☰
         </button>
       </nav>
 
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="md:hidden bg-black/95 border-t border-white/20 px-6 py-4 space-y-4 text-sm font-semibold">
-          <Link
-            href="/"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="/skills"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Skills
-          </Link>
-          <Link
-            href="/projects"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Projects
-          </Link>
-          <Link
-            href="/experience"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Experience
-          </Link>
-          <Link
-            href="/contact"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </Link>
-          <Link
-            href="/terms"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Terms of Service
-          </Link>
-          <Link
-            href="/refund"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Refund Policy
-          </Link>
+      {open && (
+        <div className="md:hidden bg-black/80 border-t border-white/10 flex flex-col text-center py-4 space-y-3">
+          {navItems.map((item) => (
+            <ScrollLink
+              key={item.to}
+              to={item.to}
+              smooth
+              duration={600}
+              offset={-60}
+              className="text-gray-300 hover:text-[var(--accent)] text-sm font-medium"
+              onClick={() => setOpen(false)}
+            >
+              {item.name}
+            </ScrollLink>
+          ))}
         </div>
       )}
     </header>
