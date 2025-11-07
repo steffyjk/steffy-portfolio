@@ -54,21 +54,22 @@ export default function HeroSection() {
 
         {/* Title */}
         <h1 className="hero-title text-4xl md:text-6xl font-bold leading-tight tracking-tight">
-          <span className="text-[var(--text)]">I Build Systems</span>
+          <span className="text-[var(--text)]">I Build Backends</span>
           <br />
-          <span className="text-[var(--accent)]">That Think</span>
+          <span className="text-[var(--accent)]">That Empower Systems</span>
         </h1>
 
         {/* Subtitle */}
         <h2 className="hero-sub text-lg md:text-xl font-medium text-gray-300">
-          Software Engineer & Logic-Driven Creator
+          Backend Engineer & Logic-Driven Creator
         </h2>
 
         {/* Description */}
         <p className="hero-desc text-sm md:text-base text-gray-400 leading-relaxed">
-          I turn ideas into structured, scalable systems — engineered with
-          logic, fueled by curiosity, and refined through discipline. I believe
-          in execution, precision, and intentional creativity.
+          I craft backend architectures that are structured, scalable, and
+          performance-oriented. With 4 years of experience in Python web
+          development, I bring logic, discipline, and curiosity together to
+          engineer systems that simply work — beautifully and efficiently.
         </p>
       </div>
 
