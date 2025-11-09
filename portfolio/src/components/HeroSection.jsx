@@ -1,99 +1,148 @@
-"use client";
-import { useEffect, useRef } from "react";
-import Image from "next/image";
-import profile from "../assets/animated_girl.jpg";
-import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
 
 export default function HeroSection() {
-  const ref = useRef(null);
+  const heroRef = useRef(null);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".hero-title", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-      gsap.from(".hero-sub", {
-        y: 30,
-        opacity: 0,
-        duration: 1.1,
-        delay: 0.15,
-        ease: "power3.out",
-      });
-      gsap.from(".hero-desc", {
-        y: 25,
-        opacity: 0,
-        duration: 1.15,
-        delay: 0.25,
-        ease: "power3.out",
-      });
-      gsap.from(".hero-img", {
-        scale: 0.85,
-        opacity: 0,
-        duration: 1.2,
-        delay: 0.3,
-        ease: "power3.out",
-      });
-    }, ref);
-    return () => ctx.revert();
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const parallaxY = scrollY * 0.5;
+  const opacity = Math.max(0, 1 - scrollY / 500);
 
   return (
     <section
-      ref={ref}
-      className="min-h-screen w-full flex flex-col lg:flex-row items-center justify-center gap-14 lg:gap-24 px-6 pt-28 pb-20"
+      ref={heroRef}
+      className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-12 bg-black text-white overflow-x-hidden"
+      style={{ transform: `translateY(${parallaxY}px)`, opacity }}
     >
-      {/* Left — Text */}
-      <div className="flex flex-col gap-6 max-w-xl lg:max-w-lg">
-        {/* Tag */}
-        <span className="uppercase tracking-[0.25em] text-[var(--accent)] text-xs font-semibold">
-          Strategic. Curious. Precise.
-        </span>
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-radial from-blue-900/20 via-black to-black"></div>
 
-        {/* Title */}
-        <h1 className="hero-title text-4xl md:text-6xl font-bold leading-tight tracking-tight">
-          <span className="text-[var(--text)]">I Build Backends</span>
+      {/* Hero Content */}
+      <div className="relative z-10 text-center max-w-5xl mx-auto">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold mb-6 bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent leading-tight animate-fade-in">
+          Backend.
           <br />
-          <span className="text-[var(--accent)]">That Empower Systems</span>
+          Supercharged.
         </h1>
 
-        {/* Subtitle */}
-        <h2 className="hero-sub text-lg md:text-xl font-medium text-gray-300">
-          Backend Engineer & Logic-Driven Creator
-        </h2>
-
-        {/* Description */}
-        <p className="hero-desc text-sm md:text-base text-gray-400 leading-relaxed">
-          I craft backend architectures that are structured, scalable, and
-          performance-oriented. With 4 years of experience in Python web
-          development, I bring logic, discipline, and curiosity together to
-          engineer systems that simply work — beautifully and efficiently.
+        <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-12 max-w-3xl mx-auto animate-fade-in-delay">
+          Robust, scalable, and efficient backend systems.
+          <br />
+          Built with precision.
         </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-delay-2">
+          <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-medium transition-all transform hover:scale-105">
+            View Projects
+          </button>
+          <button className="px-8 py-3 border border-white/20 hover:border-white/40 rounded-full text-lg font-medium transition-all">
+            Learn More
+          </button>
+        </div>
       </div>
 
-      {/* Right — Image / Orb */}
-      <div className="relative hero-img">
-        <div className="absolute inset-0 rounded-full w-[270px] h-[270px] md:w-[330px] md:h-[330px] bg-[var(--accent)]/10 blur-2xl"></div>
+      {/* Hero Image - Centered & Floating */}
+      <div className="relative z-0 mt-16 w-full max-w-6xl mx-auto animate-float">
+        <div className="relative w-full aspect-video">
+          <img
+            src="https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?auto=format&fit=crop&w=1600&q=90"
+            alt="Backend Architecture"
+            className="w-full h-full object-cover rounded-3xl shadow-2xl shadow-blue-900/50"
+          />
+          {/* Glow Effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-3xl"></div>
 
-        <Image
-          src={profile}
-          alt="Steffy Khristi Portrait"
-          width={330}
-          height={330}
-          className="w-[240px] h-[240px] md:w-[300px] md:h-[300px] rounded-full object-cover border border-[var(--accent)]/40 shadow-[0_0_30px_rgba(0,255,246,0.25)]"
-        />
-
-        {/* Subtle grid lines */}
-        <div
-          className="absolute -inset-6 -z-10 opacity-30 border border-white/5 rounded-xl
-                        [mask-image:linear-gradient(to_bottom,white,transparent)]"
-        ></div>
-
-        {/* Glow corner */}
-        <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-[var(--accent)]/60"></div>
+          {/* Edge highlight - Apple signature detail */}
+          <div className="absolute inset-0 rounded-3xl ring-1 ring-white/10"></div>
+        </div>
       </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 opacity-60 animate-fade-in-delay-3">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+            <div className="w-1 h-2 bg-white/60 rounded-full animate-scroll-down"></div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+
+        @keyframes scroll-down {
+          0% {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .animate-fade-in-delay {
+          opacity: 0;
+          animation: fadeIn 1.2s ease-out 0.3s forwards;
+        }
+
+        .animate-fade-in-delay-2 {
+          opacity: 0;
+          animation: fadeIn 1.2s ease-out 0.6s forwards;
+        }
+
+        .animate-fade-in-delay-3 {
+          opacity: 0;
+          animation: fadeIn 1.2s ease-out 0.9s forwards;
+        }
+
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-scroll-down {
+          animation: scroll-down 2s ease-in-out infinite;
+        }
+
+        .bg-gradient-radial {
+          background: radial-gradient(
+            circle at center,
+            var(--tw-gradient-stops)
+          );
+        }
+      `}</style>
     </section>
   );
 }

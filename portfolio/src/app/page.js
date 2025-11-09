@@ -8,7 +8,7 @@ import WorkSection from "@/components/WorkSection";
 
 export default function Page() {
   return (
-    <div className="min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)]">
+    <div className="min-h-screen w-full  bg-[var(--bg)] text-[var(--text)]">
       <section id="home">
         <HeroSection />
       </section>

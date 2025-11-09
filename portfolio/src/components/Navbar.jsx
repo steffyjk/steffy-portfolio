@@ -1,64 +1,70 @@
 "use client";
-import { useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
+
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const navItems = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "skills", to: "skills" },
-    { name: "Projects", to: "projects" },
-    { name: "experience", to: "experience" },
-    { name: "Contact", to: "contact" },
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Skills", href: "#skills" },
+    { name: "Projects", href: "#projects" },
+    { name: "Experience", href: "#experience" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 backdrop-blur-md bg-black/40">
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-        <h1 className="text-lg tracking-[0.15em] font-bold text-[var(--accent)]">
-          STEFFY / KRISTI
-        </h1>
-        <div className="hidden md:flex gap-10 text-sm uppercase font-semibold">
+    <header
+      className={`fixed top-0 left-0 w-full z-[999] transition-all duration-500 ${
+        scrolled
+          ? "bg-black/80 backdrop-blur-xl border-b border-white/10"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="max-w-[1400px] mx-auto px-6 h-12 flex items-center justify-center relative">
+        {/* Logo/Name - Left */}
+        <div
+          className="absolute left-6 font-semibold text-base tracking-tight cursor-pointer text-white hover:text-white/70 transition-colors duration-200"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          Steffy Khristi
+        </div>
+
+        {/* Center Nav Items */}
+        <div className="hidden md:flex gap-8">
           {navItems.map((item) => (
-            <ScrollLink
-              key={item.to}
-              to={item.to}
-              smooth
-              duration={600}
-              offset={-70}
-              className="cursor-pointer text-gray-300 hover:text-[var(--accent)] transition-all tracking-wide"
+            <a
+              key={item.name}
+              href={item.href}
+              className="text-xs text-white/70 hover:text-white transition-colors duration-200 font-normal"
             >
               {item.name}
-            </ScrollLink>
+            </a>
           ))}
         </div>
 
-        <button
-          className="md:hidden text-[var(--accent)]"
-          onClick={() => setOpen(!open)}
-        >
-          ☰
+        {/* Mobile Menu Button - Right */}
+        <button className="md:hidden absolute right-6 text-white/70 hover:text-white transition-colors">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
         </button>
       </nav>
-
-      {open && (
-        <div className="md:hidden bg-black/80 border-t border-white/10 flex flex-col text-center py-4 space-y-3">
-          {navItems.map((item) => (
-            <ScrollLink
-              key={item.to}
-              to={item.to}
-              smooth
-              duration={600}
-              offset={-60}
-              className="text-gray-300 hover:text-[var(--accent)] text-sm font-medium"
-              onClick={() => setOpen(false)}
-            >
-              {item.name}
-            </ScrollLink>
-          ))}
-        </div>
-      )}
     </header>
   );
 }
