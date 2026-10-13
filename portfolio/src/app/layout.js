@@ -26,11 +26,15 @@ export const metadata = {
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ScrollProgress from "./../components/motion/ScrollProgress";
+import GlowCursor from "./../components/motion/GlowCursor";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-black text-white antialiased">
+        <ScrollProgress />
+        <GlowCursor />
         <Navbar />
         <main>{children}</main>
         <Footer />

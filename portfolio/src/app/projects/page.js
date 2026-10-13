@@ -1,6 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import ParticleBackground from "../../components/ParticleBackground";
+import ProjectCard from "../../components/ProjectCard";
+import { Marquee, Reveal } from "../../components/motion/Reveal";
+import { ScrambleText } from "../../components/motion/TextMotion";
 
 const flagshipProjects = [
   {
@@ -80,90 +83,66 @@ const otherWork = [
   },
 ];
 
+const RIBBON = ["Django", "FastAPI", "PostgreSQL", "AWS", "Celery", "Redis", "WebSockets", "Angular", "Azure", "AI & LLM"];
+
 export default function Projects() {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-6 pt-32 pb-28 sm:px-10 sm:pb-32 md:px-14 lg:px-20 overflow-hidden">
-      {/* Decorative particle background */}
-      <ParticleBackground speed={0.7} />
+      <ParticleBackground speed={0.7} interactive={false} />
 
       {/* Title */}
-      <motion.h1
-        initial={{ opacity: 0, y: -40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-4 sm:mb-6 z-10 relative"
-      >
-        Projects
-      </motion.h1>
-      <p className="text-center text-sm sm:text-base text-gray-400 mb-12 sm:mb-16 relative z-10 max-w-2xl mx-auto">
-        Production platforms delivered across my roles — Highlighted flagship systems,
-        followed by supporting work and personal builds.
-      </p>
+      <Reveal y={0}>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center z-10 relative">
+          <ScrambleText
+            text="Projects"
+            className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500"
+            delay={150}
+          />
+        </h1>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <p className="text-center text-sm sm:text-base text-gray-400 mb-10 sm:mb-12 relative z-10 max-w-2xl mx-auto mt-4">
+          Production platforms delivered across my roles — Highlighted flagship systems,
+          followed by supporting work and personal builds.
+        </p>
+      </Reveal>
+
+      {/* Live tech ribbon under the heading */}
+      <div className="relative z-10 border-y border-blue-500/15 bg-black/40 py-3 mb-14 sm:mb-16 backdrop-blur-md">
+        <Marquee items={RIBBON} className="mx-auto" itemClassName="text-xs sm:text-sm text-gray-400 font-mono" />
+      </div>
 
       {/* Flagship Projects Grid */}
-      <div className="grid gap-8 sm:gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-3 relative z-10 max-w-7xl mx-auto">
+      <div className="grid gap-8 sm:gap-10 md:gap-12 sm:grid-cols-2 lg:grid-cols-3 relative z-10 max-w-7xl mx-auto [perspective:1200px]">
         {flagshipProjects.map((p, i) => (
-          <motion.article
-            key={i}
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0px 0px 25px rgba(139,92,246,0.6), 0px 0px 45px rgba(59,130,246,0.5)",
-            }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-            className="rounded-2xl p-6 sm:p-7 md:p-8 backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-blue-500/30 shadow-[0_0_20px_rgba(139,92,246,0.25)] hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-          >
-            <div>
-              <span className="inline-block mb-3 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full text-blue-200 bg-blue-500/20 border border-blue-400/40">
-                {p.context}
-              </span>
-              <h2 className="font-semibold text-lg sm:text-xl md:text-2xl text-white">{p.title}</h2>
-              <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-300 leading-relaxed flex-grow">
-                {p.description}
-              </p>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {p.tech.map((t) => (
-                <motion.span
-                  key={t}
-                  whileHover={{
-                    scale: 1.15,
-                    boxShadow: "0px 0px 15px rgba(59,130,246,0.8)",
-                  }}
-                  className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-full text-gray-200 bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-400/40 backdrop-blur-md transition"
-                >
-                  {t}
-                </motion.span>
-              ))}
-            </div>
-          </motion.article>
+          <ProjectCard key={p.title} project={p} index={i} />
         ))}
       </div>
 
       {/* Other Work */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-2xl sm:text-3xl font-bold text-center text-white mt-24 sm:mt-32 mb-10 sm:mb-12 relative z-10"
-      >
-        Other Work
-      </motion.h2>
+      <Reveal>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mt-24 sm:mt-32 mb-10 sm:mb-12 relative z-10">
+          Other&nbsp;
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            Work
+          </span>
+        </h2>
+      </Reveal>
 
       <div className="max-w-5xl mx-auto relative z-10 space-y-3">
         {otherWork.map((p, i) => (
           <motion.div
-            key={i}
-            initial={{ opacity: 0, x: -20 }}
+            key={p.title}
+            initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.06 }}
-            className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 rounded-xl px-4 sm:px-6 py-4 backdrop-blur-md bg-white/5 border border-white/10 hover:border-blue-400/40 hover:bg-white/10 transition-all duration-300"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            className="group flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 rounded-xl px-4 sm:px-6 py-4 backdrop-blur-md bg-white/5 border border-white/10 hover:border-blue-400/50 hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(59,130,246,0.25)] transition-all duration-300"
           >
             <span className="text-xs sm:text-[11px] font-semibold uppercase tracking-wider w-24 shrink-0 text-gray-400">
               {p.context}
             </span>
-            <span className="font-semibold text-sm sm:text-base text-white sm:w-56 shrink-0">
+            <span className="font-semibold text-sm sm:text-base text-white sm:w-56 shrink-0 group-hover:text-blue-200 transition-colors duration-300">
               {p.title}
             </span>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">

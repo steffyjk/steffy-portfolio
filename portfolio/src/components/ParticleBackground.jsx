@@ -2,10 +2,12 @@
 import { useRef, useEffect } from "react";
 
 /**
- * Shared animated particle canvas.
+ * Interactive particle constellation canvas.
+ * - Particles drift and repel from the cursor, and lines connect them to it.
  * - Decorative only: marked aria-hidden so screen readers skip it.
  * - Cancels its animation frame on unmount (no zombie RAF loops).
- * - Renders a single static frame when the user prefers reduced motion.
+ * - Renders a single static frame when the user prefers reduced motion or
+ *   on touch devices (cursor effects are meaningless there).
  */
 export default function ParticleBackground({
   count = 70,
@@ -13,6 +15,7 @@ export default function ParticleBackground({
   particleColor = "rgba(139,92,246,0.8)",
   linkColor = "rgba(59,130,246,0.15)",
   linkDist = 100,
+  interactive = true,
   className = "absolute inset-0 z-0",
 }) {
   const canvasRef = useRef(null);
@@ -21,6 +24,10 @@ export default function ParticleBackground({
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const reactive = interactive && !reduceMotion && finePointer;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -40,39 +47,86 @@ export default function ParticleBackground({
       });
     }
 
+    const mouse = { x: -9999, y: -9999 };
+    const onMove = (e) => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    };
+    const onLeave = () => {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    };
+    if (reactive) {
+      window.addEventListener("pointermove", onMove);
+      window.addEventListener("pointerleave", onLeave);
+    }
+
+    const REPEL_DIST = 120;
+
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = particleColor;
-        ctx.fill();
 
+      // Links between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = p.x - particles[j].x;
-          const dy = p.y - particles[j].y;
+          const q = particles[j];
+          const dx = p.x - q.x;
+          const dy = p.y - q.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < linkDist) {
             ctx.strokeStyle = linkColor;
             ctx.lineWidth = 0.4;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.lineTo(q.x, q.y);
             ctx.stroke();
           }
         }
+        // Links from cursor to nearby particles — the "site sees you" moment
+        if (reactive) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < REPEL_DIST * 1.6) {
+            const alpha = 0.5 * (1 - dist / (REPEL_DIST * 1.6));
+            ctx.strokeStyle = `rgba(139,92,246,${alpha.toFixed(3)})`;
+            ctx.lineWidth = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Dots
+      particles.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = particleColor;
+        ctx.fill();
       });
     };
 
     let raf;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     if (reduceMotion) {
-      // one static frame — no animation
-      draw();
+      draw(); // one static frame — no animation
     } else {
       const animate = () => {
         particles.forEach((p) => {
+          if (reactive) {
+            const dx = p.x - mouse.x;
+            const dy = p.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < REPEL_DIST && dist > 0.001) {
+              // Gentle push away from the cursor
+              const force = (REPEL_DIST - dist) / REPEL_DIST;
+              p.x += (dx / dist) * force * 2.2;
+              p.y += (dy / dist) * force * 2.2;
+            }
+          }
           p.x += p.dx;
           p.y += p.dy;
           if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
@@ -86,9 +140,13 @@ export default function ParticleBackground({
 
     return () => {
       window.removeEventListener("resize", resize);
+      if (reactive) {
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerleave", onLeave);
+      }
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [count, speed, particleColor, linkColor, linkDist]);
+  }, [count, speed, particleColor, linkColor, linkDist, interactive]);
 
   return <canvas ref={canvasRef} aria-hidden="true" className={className}></canvas>;
 }

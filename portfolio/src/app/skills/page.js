@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import ParticleBackground from "../../components/ParticleBackground";
+import { Marquee, Reveal } from "../../components/motion/Reveal";
+import { ScrambleText } from "../../components/motion/TextMotion";
 
 const skills = {
   backend: [
@@ -48,43 +50,79 @@ const skills = {
   tools: ["VS Code", "PyCharm", "Git", "GitHub", "Figma"],
 };
 
+const pill = {
+  hidden: { opacity: 0, scale: 0.4, y: 20 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 260, damping: 18 },
+  },
+};
+
 export default function Skills() {
   return (
     <section className="relative min-h-screen flex flex-col md:justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden px-4 pt-32 pb-24 md:px-8 lg:px-16">
-      {/* Decorative particle background */}
       <ParticleBackground count={80} speed={0.6} linkDist={120} particleColor="rgba(99,102,241,0.8)" linkColor="rgba(139,92,246,0.15)" />
 
+      {/* Parallax-ish drifting glow orbs behind the grid */}
+      <div className="absolute top-24 left-[18%] w-72 h-72 bg-blue-600/15 blur-[120px] rounded-full pointer-events-none animate-float-slow" />
+      <div className="absolute bottom-16 right-[15%] w-80 h-80 bg-purple-600/15 blur-[130px] rounded-full pointer-events-none animate-float" />
+
       {/* Title */}
-      <motion.h1
-        initial={{ opacity: 0, y: -40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-12 sm:mb-16 z-10"
-      >
-        My Tech Universe
-      </motion.h1>
+      <Reveal y={0}>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center mb-6 sm:mb-8 z-10 relative">
+          <ScrambleText
+            text="My Tech Universe"
+            className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500"
+            delay={100}
+          />
+        </h1>
+      </Reveal>
+
+      {/* Tagline ribbon */}
+      <div className="relative z-10 w-full max-w-4xl border-y border-blue-500/15 bg-black/40 py-3 mb-12 sm:mb-16 backdrop-blur-md">
+        <Marquee
+          items={["7 Categories", "50+ Technologies", "Production-Ready", "Backend First", "AI Enabled", "Cloud Deployed"]}
+          className="mx-auto w-full"
+          itemClassName="text-xs sm:text-sm text-purple-200/80 font-mono tracking-wider uppercase"
+          reverse
+        />
+      </div>
 
       {/* Skills Grid */}
       <div className="grid gap-10 sm:gap-12 md:gap-14 md:grid-cols-2 lg:grid-cols-3 relative z-10 w-full max-w-7xl">
         {Object.entries(skills).map(([category, items], i) => (
           <motion.div
             key={category}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: i * 0.2 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: (i % 3) * 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col"
           >
-            {/* Category */}
+            {/* Category with growing underline */}
             <h3 className="capitalize font-semibold text-lg sm:text-xl md:text-2xl text-white mb-5 relative inline-block">
               {category}
-              <span className="absolute -bottom-2 left-0 w-14 h-[3px] bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+              <motion.span
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, delay: 0.3 + (i % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute -bottom-2 left-0 w-14 h-[3px] origin-left bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+              />
             </h3>
 
-            {/* Pills */}
+            {/* Pills — cascading spring pop-in */}
             <div className="flex flex-wrap gap-2 sm:gap-3">
               {items.map((skill, j) => (
                 <motion.span
-                  key={j}
+                  key={skill}
+                  variants={pill}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: 0.15 + j * 0.06 }}
                   whileHover={{
                     scale: 1.15,
                     rotate: [0, 2, -2, 0],
@@ -95,7 +133,7 @@ export default function Skills() {
                              bg-gradient-to-r from-blue-600/30 to-purple-600/30
                              border border-blue-400/40 backdrop-blur-md
                              shadow-[0_0_10px_rgba(139,92,246,0.3)] cursor-pointer
-                             transition-all duration-300"
+                             transition-colors duration-300 hover:border-pink-400/50"
                 >
                   {skill}
                 </motion.span>

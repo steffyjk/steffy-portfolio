@@ -1,34 +1,59 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+
+const LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/skills", label: "Skills" },
+  { href: "/projects", label: "Projects" },
+  { href: "/experience", label: "Experience" },
+  { href: "/contact", label: "Contact" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 backdrop-blur-lg bg-black/85 border-b border-white/20">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 h-16 text-white">
         {/* Logo / Name */}
-        <span className="font-bold text-lg tracking-wide">Steffy Khristi</span>
+        <Link href="/" className="font-bold text-lg tracking-wide">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+            Steffy Khristi
+          </span>
+        </Link>
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex gap-6 text-sm font-semibold">
-          <Link href="/" className="text-white hover:text-gray-300 transition">
-            Home
-          </Link>
-          <Link href="/skills" className="text-white hover:text-gray-300 transition">
-            Skills
-          </Link>
-          <Link href="/projects" className="text-white hover:text-gray-300 transition">
-            Projects
-          </Link>
-          <Link href="/experience" className="text-white hover:text-gray-300 transition">
-            Experience
-          </Link>
-          <Link href="/contact" className="text-white hover:text-gray-300 transition">
-            Contact
-          </Link>
-          <Link href="/resume.pdf" download className="text-white hover:text-gray-300 transition">
+          {LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`relative py-2 hover:text-gray-300 transition ${
+                isActive(link.href) ? "text-white" : "text-gray-200"
+              }`}
+            >
+              {link.label}
+              {isActive(link.href) && (
+                <motion.span
+                  layoutId="nav-underline"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  className="absolute left-0 right-0 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-blue-400 to-purple-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]"
+                />
+              )}
+            </Link>
+          ))}
+          <Link
+            href="/resume.pdf"
+            download
+            className="px-3 py-1.5 rounded-lg border border-blue-400/40 bg-blue-500/10 hover:bg-blue-500/25 hover:shadow-[0_0_12px_rgba(59,130,246,0.5)] transition-all"
+          >
             Resume
           </Link>
         </div>
@@ -37,9 +62,9 @@ export default function Navbar() {
         <button
           className="md:hidden flex items-center text-white"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle navigation menu"
         >
           {isOpen ? (
-            // Close (X) icon
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -55,7 +80,6 @@ export default function Navbar() {
               />
             </svg>
           ) : (
-            // Hamburger (Menu) icon
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -77,41 +101,16 @@ export default function Navbar() {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-black/95 border-t border-white/20 px-6 py-4 space-y-4 text-sm font-semibold">
-          <Link
-            href="/"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="/skills"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Skills
-          </Link>
-          <Link
-            href="/projects"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Projects
-          </Link>
-          <Link
-            href="/experience"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Experience
-          </Link>
-          <Link
-            href="/contact"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </Link>
+          {LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block text-white hover:text-gray-300 transition"
+              onClick={() => setIsOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
             href="/resume.pdf"
             download
