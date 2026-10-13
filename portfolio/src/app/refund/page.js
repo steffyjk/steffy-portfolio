@@ -2,7 +2,7 @@
 
 export default function RefundPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white py-12 px-6">
+    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white pt-32 pb-16 px-6">
       <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-lg border border-blue-400/30 rounded-2xl p-8 shadow-lg">
         <h1 className="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-8">
           Refund & Cancellation Policy
@@ -91,6 +91,6 @@ export default function RefundPage() {
           </em>
         </p>
       </div>
-    </main>
+    </section>
   );
 }

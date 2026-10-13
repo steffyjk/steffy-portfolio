@@ -1,0 +1,94 @@
+"use client";
+import { useRef, useEffect } from "react";
+
+/**
+ * Shared animated particle canvas.
+ * - Decorative only: marked aria-hidden so screen readers skip it.
+ * - Cancels its animation frame on unmount (no zombie RAF loops).
+ * - Renders a single static frame when the user prefers reduced motion.
+ */
+export default function ParticleBackground({
+  count = 70,
+  speed = 0.6,
+  particleColor = "rgba(139,92,246,0.8)",
+  linkColor = "rgba(59,130,246,0.15)",
+  linkDist = 100,
+  className = "absolute inset-0 z-0",
+}) {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5) * speed,
+        dy: (Math.random() - 0.5) * speed,
+        r: Math.random() * 2 + 1,
+      });
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = particleColor;
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = p.x - particles[j].x;
+          const dy = p.y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < linkDist) {
+            ctx.strokeStyle = linkColor;
+            ctx.lineWidth = 0.4;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      });
+    };
+
+    let raf;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) {
+      // one static frame — no animation
+      draw();
+    } else {
+      const animate = () => {
+        particles.forEach((p) => {
+          p.x += p.dx;
+          p.y += p.dy;
+          if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+        });
+        draw();
+        raf = requestAnimationFrame(animate);
+      };
+      raf = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [count, speed, particleColor, linkColor, linkDist]);
+
+  return <canvas ref={canvasRef} aria-hidden="true" className={className}></canvas>;
+}

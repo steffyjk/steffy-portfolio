@@ -28,11 +28,8 @@ export default function Navbar() {
           <Link href="/contact" className="text-white hover:text-gray-300 transition">
             Contact
           </Link>
-          <Link href="/terms" className="text-white hover:text-gray-300 transition">
-            Terms of Service
-          </Link>
-          <Link href="/refund" className="text-white hover:text-gray-300 transition">
-            Refund Policy
+          <Link href="/resume.pdf" download className="text-white hover:text-gray-300 transition">
+            Resume
           </Link>
         </div>
 
@@ -116,18 +113,12 @@ export default function Navbar() {
             Contact
           </Link>
           <Link
-            href="/terms"
+            href="/resume.pdf"
+            download
             className="block text-white hover:text-gray-300 transition"
             onClick={() => setIsOpen(false)}
           >
-            Terms of Service
-          </Link>
-          <Link
-            href="/refund"
-            className="block text-white hover:text-gray-300 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Refund Policy
+            Resume
           </Link>
         </div>
       )}

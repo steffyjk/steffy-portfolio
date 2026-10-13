@@ -1,12 +1,13 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import Image from "next/image";
+import ParticleBackground from "../components/ParticleBackground";
 import profilePic from "../assets/animated_girl.jpg";
 
 export default function Home() {
   const heroRef = useRef(null);
-  const canvasRef = useRef(null);
 
   // GSAP Animations
   useEffect(() => {
@@ -34,81 +35,26 @@ export default function Home() {
             ease: "elastic.out(1, 0.5)",
           },
           "-=0.3"
+        )
+        .from(
+          ".hero-cta > *",
+          { y: 20, opacity: 0, duration: 0.6, stagger: 0.15 },
+          "-=0.4"
         );
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Particle Galaxy Background
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const particles = [];
-    for (let i = 0; i < 70; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        dx: (Math.random() - 0.5) * 0.6,
-        dy: (Math.random() - 0.5) * 0.6,
-        r: Math.random() * 2 + 1,
-      });
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((p, i) => {
-        p.x += p.dx;
-        p.y += p.dy;
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(139,92,246,0.8)";
-        ctx.fill();
-
-        for (let j = i; j < particles.length; j++) {
-          const dx = p.x - particles[j].x;
-          const dy = p.y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.strokeStyle = "rgba(59,130,246,0.15)";
-            ctx.lineWidth = 0.4;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-    return () => window.removeEventListener("resize", resize);
-  }, []);
-
   return (
-    <main
+    <div
       ref={heroRef}
-      className="relative min-h-screen flex flex-col items-center justify-center 
-                 bg-gradient-to-br from-black via-gray-900 to-black 
+      className="relative min-h-screen flex flex-col items-center justify-center
+                 bg-gradient-to-br from-black via-gray-900 to-black
                  text-white overflow-hidden px-6 pt-24 pb-12"
     >
       {/* Galaxy Background */}
-      <canvas ref={canvasRef} className="absolute inset-0 z-0"></canvas>
+      <ParticleBackground speed={0.6} linkDist={100} />
 
       {/* Hero Content */}
       <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl font-extrabold text-center relative z-10">
@@ -137,6 +83,23 @@ export default function Home() {
         turning complex business requirements into reliable, intelligent, and scalable digital solutions.
       </p>
 
+      {/* CTAs */}
+      <div className="hero-cta mt-8 flex flex-wrap items-center justify-center gap-4 relative z-10">
+        <Link
+          href="/projects"
+          className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600/60 to-purple-600/60 border border-blue-400/40 shadow-[0_0_15px_rgba(59,130,246,0.35)] hover:shadow-[0_0_25px_rgba(139,92,246,0.6)] hover:-translate-y-0.5 transition-all duration-300"
+        >
+          View Projects
+        </Link>
+        <a
+          href="/resume.pdf"
+          download
+          className="px-6 py-3 rounded-xl font-semibold text-white bg-white/5 border border-blue-400/40 hover:bg-white/10 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:-translate-y-0.5 transition-all duration-300"
+        >
+          Download CV
+        </a>
+      </div>
+
       {/* Profile Orb */}
       <div className="hero-img mt-10 sm:mt-12 relative z-10">
         <div className="absolute inset-0 w-80 h-80 rounded-full bg-gradient-to-r from-blue-500/40 to-purple-600/40 blur-3xl animate-pulse"></div>
@@ -145,12 +108,12 @@ export default function Home() {
           width={400}
           height={400}
           alt="Steffy Khristi"
-          className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full 
-                     border-4 border-blue-500/60 
-                     shadow-[0_0_35px_rgba(59,130,246,0.8)] 
+          className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full
+                     border-4 border-blue-500/60
+                     shadow-[0_0_35px_rgba(59,130,246,0.8)]
                      object-cover relative z-10"
         />
       </div>
-    </main>
+    </div>
   );
 }

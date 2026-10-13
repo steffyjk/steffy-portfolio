@@ -84,14 +84,11 @@ export default function Experience() {
       </div>
 
       {/* Title */}
-      <motion.h2
-        // initial={{ opacity: 0, y: -40 }}
-        // whileInView={{ opacity: 1, y: 0 }}
-        // transition={{ duration: 1 }}
+      <motion.h1
         className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-12 sm:mb-16 relative z-10"
       >
-        🏆 Experience
-      </motion.h2>
+        Experience
+      </motion.h1>
 
       {/* Timeline */}
       <div className="relative border-l-2 border-blue-500/40 ml-6 w-full px-6 z-10">

@@ -51,7 +51,7 @@ for (const vp of VIEWPORTS) {
 
     // screenshot at mobile only for the main pages
     if (vp.width === 375 && ["/", "/skills", "/projects", "/experience", "/contact"].includes(path)) {
-      await page.screenshot({ path: `scripts/shots${path.replace(/\//g, "_") || "_home"}.png`, fullPage: false });
+      await page.screenshot({ path: `scripts/shots/${path.replace(/\//g, "_") || "_home"}.png`, fullPage: false });
     }
     await page.close();
   }
