@@ -5,6 +5,30 @@ import { useEffect, useRef } from "react";
 export default function Projects() {
   const projects = [
     {
+      title: "Rolevance – AI Roleplay & Coaching for Life Sciences",
+      description:
+        "AI roleplay & coaching platform built exclusively for Life Sciences with multi-tenant architecture, MFA authentication, org management, role-based access control, license/credit management with usage APIs (allocation, deduction, reclaim, reassignment, audit tracking), and the PBCS scoring framework.",
+      tech: ["Django", "DRF", "PostgreSQL", "AWS", "Multi-Tenant", "MFA"],
+    },
+    {
+      title: "EasyInterviews – AI-Powered Hiring Platform",
+      description:
+        "Hiring platform with job management, JobFit criteria, multi-round interviews, candidate management, and recruiter dashboard APIs. AI-powered question generation and custom evaluation frameworks with dynamic JobFit extraction from job descriptions, plus JobBoard integration and compliance.",
+      tech: ["Django", "DRF", "PostgreSQL", "AWS", "AI Evaluation"],
+    },
+    {
+      title: "Cinelytics – Cinema Analytics Platform",
+      description:
+        "Cinema advertising analytics platform with master-list management, user-level permissions, and production bug resolution. Improved DB performance via N+1 query optimization, Materialized Views, and partitioning; integrated AWS Secrets Manager into ETL processes for data-intensive calculations.",
+      tech: ["Django", "DRF", "PostgreSQL", "AWS Secrets Manager", "ETL"],
+    },
+    {
+      title: "TruePay – Digital Loan Management Platform",
+      description:
+        "High-performance loan management system built with FastAPI covering user onboarding, KYC, loan applications, and repayment workflows. Advanced KYC verification (PAN, Aadhaar, Bank, CIBIL) via Surepass API, Celery + Redis async processing, Razorpay payments, and production-grade NGINX/Uvicorn deployment.",
+      tech: ["FastAPI", "Razorpay", "PostgreSQL", "Pydantic", "Firebase", "Celery + Redis"],
+    },
+    {
       title: "Unibox – Unified Chat Platform",
       description:
         "Unified chat platform integrating WhatsApp, Telegram, and internal messaging into one interface with real-time communication and multi-platform sync.",
@@ -129,7 +153,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black p-6 sm:p-10 md:p-14 lg:p-20 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-6 pt-32 pb-28 sm:px-10 sm:pb-32 md:px-14 lg:px-20 overflow-hidden">
       {/* Particle Galaxy Background */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0"></canvas>
 

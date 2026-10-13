@@ -67,7 +67,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white py-16 px-4 overflow-hidden">
+    <main className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white pt-32 pb-24 px-4 overflow-hidden">
       {/* Galaxy Background */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0"></canvas>
 
@@ -86,8 +86,9 @@ export default function Contact() {
       <div className="max-w-lg mx-auto mt-12 relative z-10">
         <div className="bg-white/10 backdrop-blur-lg border border-blue-400/30 rounded-2xl p-6 shadow-[0_0_25px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(139,92,246,0.5)] transition">
           <p className="text-lg font-semibold">Get In Touch</p>
-          <p className="mt-2">📧 steffy.jk20158@gmail.com</p>
+          <p className="mt-2">📧 steffy.jk2018@gmail.com</p>
           <p>📞 +91 7069214086</p>
+          <p>📍 Ahmedabad, Gujarat, India</p>
           <a
             href="https://linkedin.com/in/steffy-khristi"
             target="_blank"

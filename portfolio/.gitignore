@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# responsive check script outputs
+scripts/shots/
+
 # next.js
 /.next/
 /out/

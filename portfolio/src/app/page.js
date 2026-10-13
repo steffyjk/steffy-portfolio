@@ -105,7 +105,7 @@ export default function Home() {
       ref={heroRef}
       className="relative min-h-screen flex flex-col items-center justify-center 
                  bg-gradient-to-br from-black via-gray-900 to-black 
-                 text-white overflow-hidden px-6"
+                 text-white overflow-hidden px-6 pt-24 pb-12"
     >
       {/* Galaxy Background */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0"></canvas>
@@ -119,19 +119,22 @@ export default function Home() {
       </h1>
 
       <p className="hero-subtitle mt-6 text-base sm:text-lg md:text-xl text-gray-300 text-center max-w-2xl relative z-10">
-        Backend Software Engineer specializing in{" "}
+        Senior Software Engineer with{" "}
+        <span className="font-semibold text-white">4+ years of experience</span>{" "}
+        specializing in{" "}
         <span className="font-semibold text-white">
-          Python, Django, AngularTs, NextJs, Scalable APIs & Generative AI
+          Python, Django, DRF, FastAPI & Scalable Backend Systems
         </span>
         .
       </p>
 
       <p className="hero-desc mt-4 text-sm sm:text-base md:text-lg text-gray-400 text-center max-w-3xl leading-relaxed relative z-10">
-        I design and build{" "}
-        <span className="text-white font-medium">robust backend systems, RESTful APIs, and AI-driven applications</span>. 
+        I architect and build{" "}
+        <span className="text-white font-medium">robust backend systems, RESTful APIs, and database architectures</span>.{" "}
         With expertise in{" "}
-        <span className="text-white font-medium">cloud deployment (AWS, Azure), real-time systems, and Generative AI integration</span>, 
-        I help transform complex ideas into reliable, intelligent, and scalable digital solutions.
+        <span className="text-white font-medium">performance optimization, cloud deployment (AWS, Azure), and AI-driven applications</span>,{" "}
+        I own the end-to-end feature lifecycle — from requirement analysis and API design to deployment —
+        turning complex business requirements into reliable, intelligent, and scalable digital solutions.
       </p>
 
       {/* Profile Orb */}

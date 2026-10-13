@@ -6,26 +6,44 @@ const skills = {
   backend: [
     "Python",
     "Django",
+    "Django REST Framework",
     "Flask",
-    "DRF",
-    "Node.js",
+    "FastAPI",
+    "Celery",
     "WebSockets",
-    "RabbitMQ",
   ],
   frontend: [
-    "React",
-    "Next.js",
     "Angular",
-    "JavaScript",
-    "TypeScript",
     "RxJS",
+    "PrimeNG",
+    "Bootstrap",
+    "TypeScript",
+    "JavaScript",
     "HTML",
     "CSS",
-    "Tailwind",
   ],
-  database: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "SQLite"],
-  cloud: ["AWS", "Azure", "EC2", "S3"],
-  tools: ["Git", "GitHub", "Docker", "Figma", "VS Code", "PyCharm"],
+  database: [
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "Redis",
+    "RabbitMQ",
+    "SQLite3",
+    "Elasticsearch",
+  ],
+  "cloud & devops": [
+    "AWS EC2",
+    "AWS S3",
+    "Elastic Beanstalk",
+    "AWS RDS",
+    "Secrets Manager",
+    "Azure",
+    "Azure DevOps",
+    "NGINX",
+  ],
+  "ai & llm": ["Claude", "Retrieval-Augmented Generation (RAG)"],
+  "web scraping": ["Scrapy", "Selenium", "Cronjob"],
+  tools: ["VS Code", "PyCharm", "Git", "GitHub", "Figma"],
 };
 
 export default function Skills() {
@@ -96,7 +114,7 @@ export default function Skills() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden px-4 md:px-8 lg:px-16">
+    <section className="relative min-h-screen flex flex-col md:justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden px-4 pt-32 pb-24 md:px-8 lg:px-16">
       {/* ✨ Background particle canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0"></canvas>
 
@@ -107,7 +125,7 @@ export default function Skills() {
         transition={{ duration: 1 }}
         className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-12 sm:mb-16 z-10"
       >
-        🚀 My Tech Universe
+        🧠 My Tech Universe
       </motion.h2>
 
       {/* Skills Grid */}
